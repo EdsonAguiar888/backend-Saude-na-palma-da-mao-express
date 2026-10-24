@@ -1,6 +1,7 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
-@baseUrl = http://localhost:3000/api/v1
+# @baseUrl = http://localhost:3000/api/v1
+@baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
 ### 1. Verificar Saúde da API
 GET {{baseUrl}}/health
@@ -269,7 +270,7 @@ POST {{baseUrl}}/pacientes
 Content-Type: application/json
 
 {
-  "id_usuario": 2,
+  "id_usuario": 1,
   "cpf": "222.456.789-00",
   "data_nascimento": "1995-05-15",
   "sexo": "F"
