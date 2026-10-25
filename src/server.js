@@ -22,6 +22,9 @@ const profissionalRoutes = require('./routes/profissionalRoutes');
 
 const profissionalClinicaRoutes = require('./routes/profissionalClinicaRoutes');
 const profissionalEspecialidadeRoutes = require('./routes/profissionalEspecialidadeRoutes');
+const clinicaEspecRoutes = require('./routes/clinicaEspecRoutes');
+const disponibilidadeRoutes = require('./routes/disponibilidadeRoutes');
+const agendamentoRoutes = require('./routes/agendamentoRoutes');
 
 app.use('/api/v1/usuarios', usuarioRoutes);
 app.use('/api/v1/clinicas', clinicaRoutes);
@@ -31,7 +34,9 @@ app.use('/api/v1/profissionais', profissionalRoutes);
 
 app.use('/api/v1/profissional-clinica', profissionalClinicaRoutes);
 app.use('/api/v1/profissional-especialidade', profissionalEspecialidadeRoutes);
-
+app.use('/api/v1/clinica-especialidade', clinicaEspecRoutes);
+app.use('/api/v1/disponibilidades', disponibilidadeRoutes);
+app.use('/api/v1/agendamentos', agendamentoRoutes);
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)
 app.get('/api/v1/health', (req, res) => {
