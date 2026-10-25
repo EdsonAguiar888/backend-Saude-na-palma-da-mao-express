@@ -1,0 +1,878 @@
+openapi: 3.0.3
+info:
+  title: Saúde na Palma da Mão - API
+  version: 1.0.0
+  description: |
+    Documentação da API do Projeto Integrador Saúde na Palma da Mão.
+    Os endpoints refletem as rotas registradas em src/server.js.
+servers:
+  - url: http://localhost:3000
+    description: Ambiente local
+tags:
+  - name: Saúde
+  - name: Usuários
+  - name: Clínicas
+  - name: Especialidades
+  - name: Pacientes
+  - name: Profissionais
+  - name: Profissional-Clínica
+  - name: Profissional-Especialidade
+  - name: Clínica-Especialidade
+  - name: Disponibilidades
+  - name: Agendamentos
+paths:
+  /api/v1/health:
+    get:
+      tags: [Saúde]
+      summary: Verifica se a API está funcionando
+      responses:
+        '200':
+          description: API funcionando
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+                  message:
+                    {
+                      type: string,
+                      example: Backend Projeto_SPM API funcionando com sucesso!,
+                    }
+
+  /api/v1/usuarios:
+    get:
+      tags: [Usuários]
+      summary: Lista usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Usuario' }
+    post:
+      tags: [Usuários]
+      summary: Cadastra usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UsuarioInput' }
+      responses:
+        '201':
+          description: Usuário criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Usuario' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/usuarios/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Usuários]
+      summary: Busca usuário por ID
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Usuario' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Usuários]
+      summary: Atualiza usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UsuarioInput' }
+      responses:
+        '200':
+          description: Usuário atualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Usuario' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Usuários]
+      summary: Exclui usuário
+      responses:
+        '204': { description: Usuário excluído }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/clinicas:
+    get:
+      tags: [Clínicas]
+      summary: Lista clínicas
+      responses:
+        '200':
+          description: Lista de clínicas
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Clinica' }
+    post:
+      tags: [Clínicas]
+      summary: Cadastra clínica
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ClinicaInput' }
+      responses:
+        '201':
+          description: Clínica criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Clinica' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/clinicas/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Clínicas]
+      summary: Busca clínica por ID
+      responses:
+        '200':
+          description: Clínica encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Clinica' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Clínicas]
+      summary: Atualiza clínica
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ClinicaInput' }
+      responses:
+        '200':
+          description: Clínica atualizada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Clinica' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Clínicas]
+      summary: Exclui clínica
+      responses:
+        '204': { description: Clínica excluída }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/especialidades:
+    get:
+      tags: [Especialidades]
+      summary: Lista especialidades
+      responses:
+        '200':
+          description: Lista de especialidades
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Especialidade' }
+    post:
+      tags: [Especialidades]
+      summary: Cadastra especialidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EspecialidadeInput' }
+      responses:
+        '201':
+          description: Especialidade criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Especialidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/especialidades/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Especialidades]
+      summary: Busca especialidade por ID
+      responses:
+        '200':
+          description: Especialidade encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Especialidade' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Especialidades]
+      summary: Atualiza especialidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EspecialidadeInput' }
+      responses:
+        '200':
+          description: Especialidade atualizada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Especialidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Especialidades]
+      summary: Exclui especialidade
+      responses:
+        '204': { description: Especialidade excluída }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/pacientes:
+    get:
+      tags: [Pacientes]
+      summary: Lista pacientes
+      responses:
+        '200':
+          description: Lista de pacientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Paciente' }
+    post:
+      tags: [Pacientes]
+      summary: Cadastra paciente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PacienteInput' }
+      responses:
+        '201':
+          description: Paciente criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Paciente' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/pacientes/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Pacientes]
+      summary: Busca paciente por ID
+      responses:
+        '200':
+          description: Paciente encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Paciente' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Pacientes]
+      summary: Atualiza paciente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PacienteInput' }
+      responses:
+        '200':
+          description: Paciente atualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Paciente' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Pacientes]
+      summary: Exclui paciente
+      responses:
+        '204': { description: Paciente excluído }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/profissionais:
+    get:
+      tags: [Profissionais]
+      summary: Lista profissionais
+      responses:
+        '200':
+          description: Lista de profissionais
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Profissional' }
+    post:
+      tags: [Profissionais]
+      summary: Cadastra profissional
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfissionalInput' }
+      responses:
+        '201':
+          description: Profissional criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profissional' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/profissionais/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Profissionais]
+      summary: Busca profissional por ID
+      responses:
+        '200':
+          description: Profissional encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profissional' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Profissionais]
+      summary: Atualiza profissional
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfissionalInput' }
+      responses:
+        '200':
+          description: Profissional atualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profissional' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Profissionais]
+      summary: Exclui profissional
+      responses:
+        '204': { description: Profissional excluído }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/profissional-clinica:
+    get:
+      tags: [Profissional-Clínica]
+      summary: Lista vínculos entre profissionais e clínicas
+      responses:
+        '200':
+          description: Lista de vínculos
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ProfissionalClinica' }
+    post:
+      tags: [Profissional-Clínica]
+      summary: Cria vínculo profissional-clínica
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfissionalClinicaInput' }
+      responses:
+        '201':
+          description: Vínculo criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfissionalClinica' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/profissional-clinica/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Profissional-Clínica]
+      summary: Busca vínculo profissional-clínica por ID
+      responses:
+        '200':
+          description: Vínculo encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfissionalClinica' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Profissional-Clínica]
+      summary: Atualiza vínculo profissional-clínica
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfissionalClinicaInput' }
+      responses:
+        '200':
+          description: Vínculo atualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfissionalClinica' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Profissional-Clínica]
+      summary: Exclui vínculo profissional-clínica
+      responses:
+        '204': { description: Vínculo excluído }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/profissional-especialidade:
+    get:
+      tags: [Profissional-Especialidade]
+      summary: Lista associações entre profissionais e especialidades
+      responses:
+        '200':
+          description: Lista de associações
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  { $ref: '#/components/schemas/ProfissionalEspecialidade' }
+    post:
+      tags: [Profissional-Especialidade]
+      summary: Cria associação profissional-especialidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              { $ref: '#/components/schemas/ProfissionalEspecialidadeInput' }
+      responses:
+        '201':
+          description: Associação criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfissionalEspecialidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/profissional-especialidade/{idProfissional}/{idEspecialidade}:
+    parameters:
+      - name: idProfissional
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+      - name: idEspecialidade
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+    get:
+      tags: [Profissional-Especialidade]
+      summary: Busca associação por chave composta
+      responses:
+        '200':
+          description: Associação encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfissionalEspecialidade' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    delete:
+      tags: [Profissional-Especialidade]
+      summary: Exclui associação por chave composta
+      responses:
+        '204': { description: Associação excluída }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/clinica-especialidade:
+    get:
+      tags: [Clínica-Especialidade]
+      summary: Lista associações entre clínicas e especialidades
+      responses:
+        '200':
+          description: Lista de associações
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ClinicaEspecialidade' }
+    post:
+      tags: [Clínica-Especialidade]
+      summary: Cria associação clínica-especialidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ClinicaEspecialidadeInput' }
+      responses:
+        '201':
+          description: Associação criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ClinicaEspecialidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/clinica-especialidade/{idClinica}/{idEspecialidade}:
+    parameters:
+      - name: idClinica
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+      - name: idEspecialidade
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+    get:
+      tags: [Clínica-Especialidade]
+      summary: Busca associação por chave composta
+      responses:
+        '200':
+          description: Associação encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ClinicaEspecialidade' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    delete:
+      tags: [Clínica-Especialidade]
+      summary: Exclui associação por chave composta
+      responses:
+        '204': { description: Associação excluída }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/disponibilidades:
+    get:
+      tags: [Disponibilidades]
+      summary: Lista disponibilidades
+      responses:
+        '200':
+          description: Lista de disponibilidades
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Disponibilidade' }
+    post:
+      tags: [Disponibilidades]
+      summary: Cadastra disponibilidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DisponibilidadeInput' }
+      responses:
+        '201':
+          description: Disponibilidade criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Disponibilidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/disponibilidades/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Disponibilidades]
+      summary: Busca disponibilidade por ID
+      responses:
+        '200':
+          description: Disponibilidade encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Disponibilidade' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Disponibilidades]
+      summary: Atualiza disponibilidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DisponibilidadeInput' }
+      responses:
+        '200':
+          description: Disponibilidade atualizada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Disponibilidade' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Disponibilidades]
+      summary: Exclui disponibilidade
+      responses:
+        '204': { description: Disponibilidade excluída }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+  /api/v1/agendamentos:
+    get:
+      tags: [Agendamentos]
+      summary: Lista agendamentos
+      responses:
+        '200':
+          description: Lista de agendamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Agendamento' }
+    post:
+      tags: [Agendamentos]
+      summary: Cria agendamento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AgendamentoInput' }
+      responses:
+        '201':
+          description: Agendamento criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Agendamento' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+  /api/v1/agendamentos/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Agendamentos]
+      summary: Busca agendamento por ID
+      responses:
+        '200':
+          description: Agendamento encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Agendamento' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+    put:
+      tags: [Agendamentos]
+      summary: Atualiza agendamento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AgendamentoInput' }
+      responses:
+        '200':
+          description: Agendamento atualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Agendamento' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+    delete:
+      tags: [Agendamentos]
+      summary: Exclui agendamento
+      responses:
+        '204': { description: Agendamento excluído }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Identificador do registro
+      schema:
+        type: integer
+        format: int64
+  responses:
+    ErroRequisicao:
+      description: Erro na requisição
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              erro: { type: string, example: Mensagem do erro }
+    NaoEncontrado:
+      description: Registro não encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              mensagem: { type: string, example: Registro não encontrado. }
+  schemas:
+    UsuarioInput:
+      type: object
+      required: [nome, email, senha_hash, tipo_usuario]
+      properties:
+        nome: { type: string, maxLength: 150, example: Maria da Silva }
+        email:
+          {
+            type: string,
+            format: email,
+            maxLength: 150,
+            example: maria@example.com,
+          }
+        senha_hash:
+          {
+            type: string,
+            writeOnly: true,
+            maxLength: 255,
+            description: Enviar o valor no formato esperado pelo backend; não enviar senha em texto puro sem confirmar a implementação de autenticação.,
+          }
+        telefone:
+          {
+            type: string,
+            maxLength: 20,
+            nullable: true,
+            example: '81999990000',
+          }
+        tipo_usuario:
+          { type: string, enum: [PACIENTE, PROFISSIONAL, ADMINISTRADOR] }
+        ativo: { type: boolean, default: true }
+    Usuario:
+      allOf:
+        - $ref: '#/components/schemas/UsuarioInput'
+        - type: object
+          properties:
+            id_usuario: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            senha_hash: { type: string, writeOnly: true }
+    ClinicaInput:
+      type: object
+      required: [nome, cnpj]
+      properties:
+        nome: { type: string, maxLength: 150, example: Clínica Exemplo }
+        cnpj: { type: string, maxLength: 18, example: '00.000.000/0001-00' }
+        telefone: { type: string, maxLength: 20, nullable: true }
+        email: { type: string, format: email, maxLength: 150, nullable: true }
+        logradouro: { type: string, maxLength: 180, nullable: true }
+        numero: { type: string, maxLength: 20, nullable: true }
+        bairro: { type: string, maxLength: 100, nullable: true }
+        cidade: { type: string, maxLength: 100, nullable: true }
+        estado: { type: string, maxLength: 100, nullable: true }
+        uf: { type: string, minLength: 2, maxLength: 2, nullable: true }
+        ativo: { type: boolean, default: true }
+    Clinica:
+      allOf:
+        - $ref: '#/components/schemas/ClinicaInput'
+        - type: object
+          properties:
+            id_clinica: { type: integer, format: int64, readOnly: true }
+    EspecialidadeInput:
+      type: object
+      required: [nome]
+      properties:
+        nome: { type: string, maxLength: 100, example: Ortopedia }
+        descricao: { type: string, nullable: true }
+        ativo: { type: boolean, default: true }
+    Especialidade:
+      allOf:
+        - $ref: '#/components/schemas/EspecialidadeInput'
+        - type: object
+          properties:
+            id_especialidade: { type: integer, format: int64, readOnly: true }
+    PacienteInput:
+      type: object
+      required: [id_usuario, cpf, data_nascimento]
+      properties:
+        id_usuario: { type: integer, format: int64 }
+        cpf: { type: string, maxLength: 14, example: '000.000.000-00' }
+        data_nascimento: { type: string, format: date, example: '1960-05-20' }
+        sexo: { type: string, maxLength: 30, nullable: true }
+        observacoes: { type: string, nullable: true }
+    Paciente:
+      allOf:
+        - $ref: '#/components/schemas/PacienteInput'
+        - type: object
+          properties:
+            id_paciente: { type: integer, format: int64, readOnly: true }
+            usuario: { $ref: '#/components/schemas/Usuario' }
+    ProfissionalInput:
+      type: object
+      required: [id_usuario, cpf, conselho, registro_profissional, uf_registro]
+      properties:
+        id_usuario: { type: integer, format: int64 }
+        cpf: { type: string, maxLength: 14 }
+        conselho: { type: string, maxLength: 30, example: CREFITO }
+        registro_profissional: { type: string, maxLength: 30 }
+        uf_registro: { type: string, minLength: 2, maxLength: 2, example: PE }
+        ativo: { type: boolean, default: true }
+    Profissional:
+      allOf:
+        - $ref: '#/components/schemas/ProfissionalInput'
+        - type: object
+          properties:
+            id_profissional: { type: integer, format: int64, readOnly: true }
+            usuario: { $ref: '#/components/schemas/Usuario' }
+    ProfissionalClinicaInput:
+      type: object
+      required: [id_profissional, id_clinica]
+      properties:
+        id_profissional: { type: integer, format: int64 }
+        id_clinica: { type: integer, format: int64 }
+        ativo: { type: boolean, default: true }
+    ProfissionalClinica:
+      allOf:
+        - $ref: '#/components/schemas/ProfissionalClinicaInput'
+        - type: object
+          properties:
+            id_profissional_clinica:
+              { type: integer, format: int64, readOnly: true }
+            profissional: { $ref: '#/components/schemas/Profissional' }
+            clinica: { $ref: '#/components/schemas/Clinica' }
+    ProfissionalEspecialidadeInput:
+      type: object
+      required: [id_profissional, id_especialidade]
+      properties:
+        id_profissional: { type: integer, format: int64 }
+        id_especialidade: { type: integer, format: int64 }
+    ProfissionalEspecialidade:
+      allOf:
+        - $ref: '#/components/schemas/ProfissionalEspecialidadeInput'
+        - type: object
+          properties:
+            profissional: { $ref: '#/components/schemas/Profissional' }
+            especialidade: { $ref: '#/components/schemas/Especialidade' }
+    ClinicaEspecialidadeInput:
+      type: object
+      required: [id_clinica, id_especialidade]
+      properties:
+        id_clinica: { type: integer, format: int64 }
+        id_especialidade: { type: integer, format: int64 }
+    ClinicaEspecialidade:
+      allOf:
+        - $ref: '#/components/schemas/ClinicaEspecialidadeInput'
+        - type: object
+          properties:
+            clinica: { $ref: '#/components/schemas/Clinica' }
+            especialidade: { $ref: '#/components/schemas/Especialidade' }
+    DisponibilidadeInput:
+      type: object
+      required:
+        [
+          id_profissional_clinica,
+          data_atendimento,
+          hora_inicio,
+          hora_fim,
+          duracao_minutos,
+          status,
+        ]
+      properties:
+        id_profissional_clinica: { type: integer, format: int64 }
+        data_atendimento: { type: string, format: date, example: '2026-11-10' }
+        hora_inicio: { type: string, example: '09:00:00' }
+        hora_fim: { type: string, example: '09:30:00' }
+        duracao_minutos: { type: integer, example: 30 }
+        status: { type: string, enum: [DISPONIVEL, RESERVADO, BLOQUEADO] }
+    Disponibilidade:
+      allOf:
+        - $ref: '#/components/schemas/DisponibilidadeInput'
+        - type: object
+          properties:
+            id_disponibilidade: { type: integer, format: int64, readOnly: true }
+            profissionalClinica:
+              { $ref: '#/components/schemas/ProfissionalClinica' }
+    AgendamentoInput:
+      type: object
+      required:
+        [
+          id_paciente,
+          id_profissional_clinica,
+          id_especialidade,
+          data_hora,
+          status,
+        ]
+      properties:
+        id_paciente: { type: integer, format: int64 }
+        id_profissional_clinica: { type: integer, format: int64 }
+        id_especialidade: { type: integer, format: int64 }
+        data_hora:
+          { type: string, format: date-time, example: '2026-11-10T09:00:00' }
+        status:
+          { type: string, enum: [PENDENTE, CONFIRMADO, CANCELADO, CONCLUIDO] }
+        observacao: { type: string, nullable: true }
+    Agendamento:
+      allOf:
+        - $ref: '#/components/schemas/AgendamentoInput'
+        - type: object
+          properties:
+            id_agendamento: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            paciente: { $ref: '#/components/schemas/Paciente' }
+            profissionalClinica:
+              { $ref: '#/components/schemas/ProfissionalClinica' }
+            especialidade: { $ref: '#/components/schemas/Especialidade' }
