@@ -13,10 +13,12 @@ require('dotenv').config();
 
 const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'dpg-dbdqr6jrjlhs738318d0-a',
+  // host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT, 10) || 5432,
   username: process.env.DB_USER || 'projeto_user',
-  password: process.env.DB_PASSWORD || 'projeto_password',
+  password: process.env.DB_PASSWORD || '1wpnv43a4vI6oMVa54ibDCqQ4ZTY2OZF',
+  // password: process.env.DB_PASSWORD || 'projeto_password',
   database: process.env.DB_NAME || 'projeto_db',
   synchronize: true, // Apenas para o desenvolvimento inicial (evita criar migrations manuais agora)
   logging: false,
