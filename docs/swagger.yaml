@@ -6,7 +6,7 @@ info:
     Documentação da API do Projeto Integrador Saúde na Palma da Mão.
     Os endpoints refletem as rotas registradas em src/server.js.
 servers:
- - url: https://backend-saude-na-palma-da-mao-express.onrender.com    
+ - url: https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1    
     description: API publicada no Render
 
 
@@ -21,7 +21,7 @@ servers:
 
 
 
-    
+
 tags:
   - name: Saúde
   - name: Autenticação
