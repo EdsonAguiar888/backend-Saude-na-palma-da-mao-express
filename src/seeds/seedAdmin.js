@@ -34,7 +34,25 @@ async function criarAdmin() {
         );
       }
 
-      console.log('O administrador já existe. Nenhum usuário foi criado.');
+      const senhaAtualValida = await bcrypt.compare(
+        senha,
+        adminExistente.senha_hash
+      );
+
+      if (
+        !senhaAtualValida ||
+        !adminExistente.ativo ||
+        adminExistente.nome !== nome
+      ) {
+        adminExistente.senha_hash = senhaAtualValida
+          ? adminExistente.senha_hash
+          : await bcrypt.hash(senha, 10);
+        adminExistente.ativo = true;
+        adminExistente.nome = nome;
+        await usuarioRepository.save(adminExistente);
+      }
+
+      console.log('Administrador sincronizado com as variáveis de ambiente.');
       return;
     }
 
