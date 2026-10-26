@@ -12,6 +12,10 @@
 
 Repositório oficial do **Back-end (API REST)** da aplicação **Saúde na Palma da Mão**, desenvolvido como artefato do Projeto Integrador do 3º período do curso de Análise e Desenvolvimento de Sistemas da **Faculdade Senac Pernambuco**.
 
+ **Link do projeto:** https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
+
+ **Link documentação do projeto:** https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1/docs/
+
 ---
 
 ## 🎯 Sobre o Projeto
@@ -129,7 +133,7 @@ Certifique-se de ter instalado:
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/paulodccoutinho/backend-saude-na-palma-mao-api.git
+git clone https://github.com/EdsonAguiar888/backend-Saude-na-palma-da-mao-express
 
 cd backend-saude-na-palma-mao-api
 ```

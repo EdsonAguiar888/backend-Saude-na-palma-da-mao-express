@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 const AppDataSource = require('./config/database');
@@ -9,6 +10,31 @@ const PORT = process.env.APP_PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/v1/docs', express.static(path.join(__dirname, '../docs')));
+
+app.get('/api/v1/docs', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saúde na Palma da Mão - Documentação da API</title>
+  <link rel="stylesheet"
+    href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    SwaggerUIBundle({
+      url: '/api/v1/docs/swagger.yaml',
+      dom_id: '#swagger-ui'
+    });
+  </script>
+</body>
+</html>`);
+});
 
 // Importação das rotas
 const usuarioRoutes = require('./routes/usuarioRoutes');
@@ -56,10 +82,11 @@ app.use('/api/v1/profissionais', authMiddleware, adminMiddleware, profissionalRo
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)
 app.get('/api/v1/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend Projeto_SPM API funcionando com sucesso!' });
+  res.json({
+    status: 'ok',
+    message: 'Backend Projeto_SPM API funcionando com sucesso!',
+  });
 });
-
-
 
 // Inicializando o Banco de Dados e o Servidor Express
 AppDataSource.initialize()
@@ -69,6 +96,6 @@ AppDataSource.initialize()
       console.log(`🚀 Servidor rodando na porta ${PORT}`);
     });
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('❌ Erro durante a inicialização do Data Source:', error);
   });
