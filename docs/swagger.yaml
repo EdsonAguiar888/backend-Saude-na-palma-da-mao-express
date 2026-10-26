@@ -10,6 +10,7 @@ servers:
     description: Ambiente local
 tags:
   - name: Saúde
+  - name: Autenticação
   - name: Usuários
   - name: Clínicas
   - name: Especialidades
@@ -40,10 +41,59 @@ paths:
                       example: Backend Projeto_SPM API funcionando com sucesso!,
                     }
 
+  /api/v1/auth/cadastro:
+    post:
+      tags: [Autenticação]
+      summary: Cadastra uma conta de paciente
+      description: A senha é armazenada como hash e o tipo de usuário é definido como PACIENTE.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CadastroInput' }
+      responses:
+        '201':
+          description: Conta cadastrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UsuarioCadastrado' }
+        '400': { $ref: '#/components/responses/ErroMensagemRequisicao' }
+        '409':
+          description: E-mail já cadastrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErroMensagem' }
+        '500': { $ref: '#/components/responses/ErroInterno' }
+  /api/v1/auth/login:
+    post:
+      tags: [Autenticação]
+      summary: Autentica um usuário e retorna um JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginInput' }
+      responses:
+        '200':
+          description: Login realizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LoginResponse' }
+        '400': { $ref: '#/components/responses/ErroMensagemRequisicao' }
+        '401':
+          description: E-mail ou senha inválidos, ou usuário inativo
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErroMensagem' }
+        '500': { $ref: '#/components/responses/ErroInterno' }
+
   /api/v1/usuarios:
     get:
       tags: [Usuários]
       summary: Lista usuários
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Lista de usuários
@@ -52,9 +102,14 @@ paths:
               schema:
                 type: array
                 items: { $ref: '#/components/schemas/Usuario' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     post:
       tags: [Usuários]
       summary: Cadastra usuário
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -67,12 +122,17 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Usuario' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
   /api/v1/usuarios/{id}:
     parameters:
       - $ref: '#/components/parameters/Id'
     get:
       tags: [Usuários]
       summary: Busca usuário por ID
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Usuário encontrado
@@ -80,9 +140,14 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Usuario' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     put:
       tags: [Usuários]
       summary: Atualiza usuário
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -95,17 +160,27 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Usuario' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     delete:
       tags: [Usuários]
       summary: Exclui usuário
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '204': { description: Usuário excluído }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
 
   /api/v1/clinicas:
     get:
       tags: [Clínicas]
       summary: Lista clínicas
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Lista de clínicas
@@ -114,9 +189,14 @@ paths:
               schema:
                 type: array
                 items: { $ref: '#/components/schemas/Clinica' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     post:
       tags: [Clínicas]
       summary: Cadastra clínica
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -129,12 +209,17 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Clinica' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
   /api/v1/clinicas/{id}:
     parameters:
       - $ref: '#/components/parameters/Id'
     get:
       tags: [Clínicas]
       summary: Busca clínica por ID
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Clínica encontrada
@@ -142,9 +227,14 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Clinica' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     put:
       tags: [Clínicas]
       summary: Atualiza clínica
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -157,12 +247,19 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Clinica' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     delete:
       tags: [Clínicas]
       summary: Exclui clínica
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '204': { description: Clínica excluída }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
 
   /api/v1/especialidades:
     get:
@@ -292,6 +389,9 @@ paths:
     get:
       tags: [Profissionais]
       summary: Lista profissionais
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Lista de profissionais
@@ -300,9 +400,14 @@ paths:
               schema:
                 type: array
                 items: { $ref: '#/components/schemas/Profissional' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     post:
       tags: [Profissionais]
       summary: Cadastra profissional
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -315,12 +420,17 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Profissional' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
   /api/v1/profissionais/{id}:
     parameters:
       - $ref: '#/components/parameters/Id'
     get:
       tags: [Profissionais]
       summary: Busca profissional por ID
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Profissional encontrado
@@ -328,9 +438,14 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Profissional' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     put:
       tags: [Profissionais]
       summary: Atualiza profissional
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -343,12 +458,19 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Profissional' }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
     delete:
       tags: [Profissionais]
       summary: Exclui profissional
+      description: Acesso restrito a administradores.
+      security:
+        - BearerAuth: []
       responses:
         '204': { description: Profissional excluído }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/AcessoNegado' }
 
   /api/v1/profissional-clinica:
     get:
@@ -647,6 +769,11 @@ paths:
         '400': { $ref: '#/components/responses/ErroRequisicao' }
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     Id:
       name: id
@@ -673,7 +800,97 @@ components:
             type: object
             properties:
               mensagem: { type: string, example: Registro não encontrado. }
+    NaoAutenticado:
+      description: Token ausente, inválido ou expirado
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErroMensagem' }
+    ErroMensagemRequisicao:
+      description: Dados obrigatórios ausentes ou inválidos
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErroMensagem' }
+    AcessoNegado:
+      description: Acesso permitido somente para administradores
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErroMensagem' }
+    ErroInterno:
+      description: Erro interno ao processar a requisição
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErroMensagem' }
   schemas:
+    ErroMensagem:
+      type: object
+      properties:
+        mensagem: { type: string, example: Mensagem de erro }
+    CadastroInput:
+      type: object
+      required: [nome, email, senha]
+      properties:
+        nome: { type: string, maxLength: 150, example: Maria da Silva }
+        email:
+          {
+            type: string,
+            format: email,
+            maxLength: 150,
+            example: maria@example.com,
+          }
+        senha:
+          {
+            type: string,
+            format: password,
+            writeOnly: true,
+            example: SenhaForte123,
+          }
+        telefone:
+          {
+            type: string,
+            maxLength: 20,
+            nullable: true,
+            example: '81999990000',
+          }
+    LoginInput:
+      type: object
+      required: [email, senha]
+      properties:
+        email: { type: string, format: email, example: maria@example.com }
+        senha:
+          {
+            type: string,
+            format: password,
+            writeOnly: true,
+            example: SenhaForte123,
+          }
+    UsuarioCadastrado:
+      type: object
+      properties:
+        id_usuario: { type: integer, format: int64, example: 1 }
+        nome: { type: string, example: Maria da Silva }
+        email: { type: string, format: email, example: maria@example.com }
+        telefone: { type: string, nullable: true, example: '81999990000' }
+        tipo_usuario: { type: string, enum: [PACIENTE], example: PACIENTE }
+        ativo: { type: boolean, example: true }
+        criado_em: { type: string, format: date-time }
+    LoginResponse:
+      type: object
+      required: [token, usuario]
+      properties:
+        token: { type: string, description: JWT para uso como Bearer token }
+        usuario:
+          type: object
+          required: [id_usuario, nome, email, tipo_usuario]
+          properties:
+            id_usuario: { type: integer, format: int64, example: 1 }
+            nome: { type: string, example: Maria da Silva }
+            email: { type: string, format: email, example: maria@example.com }
+            tipo_usuario:
+              {
+                type: string,
+                enum: [PACIENTE, PROFISSIONAL, ADMINISTRADOR],
+                example: PACIENTE,
+              }
     UsuarioInput:
       type: object
       required: [nome, email, senha_hash, tipo_usuario]
