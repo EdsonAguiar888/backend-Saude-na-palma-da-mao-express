@@ -165,6 +165,8 @@ JWT_SECRET=altere_para_uma_chave_segura
 
 **Importante:** os nomes das variáveis devem corresponder aos utilizados na implementação da conexão com o PostgreSQL e na configuração da autenticação. Não publique credenciais reais no repositório.
 
+Para criar o administrador inicial, configure também `ADMIN_NAME`, `ADMIN_EMAIL` e `ADMIN_PASSWORD`. O comando `npm start` executa o seed antes de iniciar a API. A senha deve ter pelo menos 6 caracteres; o seed não redefine a senha se esse administrador já existir.
+
 ### 4. Inicie o PostgreSQL com Docker
 
 Com o arquivo `docker-compose.yml` configurado, execute:
@@ -265,6 +267,8 @@ A arquitetura de produção será composta por:
 - **ORM:** TypeORM para mapeamento das entidades, relacionamentos e operações de persistência.
 
 As credenciais do banco de dados deverão ser configuradas nas variáveis de ambiente do serviço de hospedagem. Em produção, o acesso ao banco deve ser restrito à infraestrutura autorizada, com uso de conexões seguras quando suportadas pelo provedor.
+
+No Render, configure `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` e `JWT_SECRET` nas variáveis de ambiente do serviço e use `npm start` como comando de inicialização. O seed é executado a cada inicialização e cria o administrador apenas se ele ainda não existir. Para alterar a senha de um administrador já criado, será necessário atualizar esse usuário no banco de dados; mudar a variável `ADMIN_PASSWORD` não altera uma conta existente.
 
 Documentação oficial: [Deploy de aplicações Node.js no Render](https://render.com/docs/deploy-node-express-app) e [PostgreSQL no Render](https://render.com/docs/databases).
 
