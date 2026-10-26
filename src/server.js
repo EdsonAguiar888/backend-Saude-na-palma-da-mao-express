@@ -10,9 +10,9 @@ const PORT = process.env.APP_PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/docs', express.static(path.join(__dirname, '../docs')));
+app.use('/api/v1/docs', express.static(path.join(__dirname, '../docs')));
 
-app.get('/api-docs', (req, res) => {
+app.get('/api/v1/docs', (req, res) => {
   res.send(`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -28,7 +28,7 @@ app.get('/api-docs', (req, res) => {
   <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
   <script>
     SwaggerUIBundle({
-      url: '/docs/swagger.yaml',
+      url: '/api/v1/docs/swagger.yaml',
       dom_id: '#swagger-ui'
     });
   </script>
