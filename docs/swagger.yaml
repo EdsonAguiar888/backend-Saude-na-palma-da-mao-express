@@ -6,8 +6,22 @@ info:
     Documentação da API do Projeto Integrador Saúde na Palma da Mão.
     Os endpoints refletem as rotas registradas em src/server.js.
 servers:
-  - url: http://localhost:3000
-    description: Ambiente local
+ - url: https://backend-saude-na-palma-da-mao-express.onrender.com    
+    description: API publicada no Render
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 tags:
   - name: Saúde
   - name: Autenticação
@@ -855,13 +869,13 @@ components:
       type: object
       required: [email, senha]
       properties:
-        email: { type: string, format: email, example: maria@example.com }
+        email: { type: string, format: email, example: admin@admin.com }
         senha:
           {
             type: string,
             format: password,
             writeOnly: true,
-            example: SenhaForte123,
+            example: admin12345,
           }
     UsuarioCadastrado:
       type: object

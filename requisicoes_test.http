@@ -23,7 +23,7 @@ Content-Type: application/json
   "telefone": "81999998888"
   
 }
-### 1.2 Login Usuário
+### 1.2 Login Admin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
