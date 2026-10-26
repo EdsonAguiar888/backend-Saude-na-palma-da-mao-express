@@ -10,14 +10,29 @@ GET {{baseUrl}}/health
 ### MÓDULO: USUÁRIOS
 ### ==========================================
 
+### 1.1. Criar Novo Usuário (Paciente)
+POST {{baseUrl}}/auth/cadastro
+Content-Type: application/json
+
+{
+  "nome": "Edson Silva",
+  "email": "edson@edson.com",
+  "senha": "12345",
+  "telefone": "81999998888"
+  
+}
+
+
+
+
 ### 2. Criar Novo Usuário (Paciente)
 POST {{baseUrl}}/usuarios
 Content-Type: application/json
 
 {
-  "nome": "Maria Silva",
-  "email": "maria.silva@email.com",
-  "senha_hash": "hash_senha_segura_123",
+  "nome": "Jose Silva",
+  "email": "jose.jose@email.com",
+  "senha_hash": "12345",
   "telefone": "81999998888",
   "tipo_usuario": "PACIENTE"
 }

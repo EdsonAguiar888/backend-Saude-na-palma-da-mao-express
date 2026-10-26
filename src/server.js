@@ -23,18 +23,35 @@ const clinicaEspecRoutes = require('./routes/clinicaEspecRoutes');
 const disponibilidadeRoutes = require('./routes/disponibilidadeRoutes');
 const agendamentoRoutes = require('./routes/agendamentoRoutes');
 
+const authRoutes = require('./routes/authRoutes');
+const authMiddleware = require('./middlewares/authMiddleware');
+const adminMiddleware = require('./middlewares/adminMiddleware');
 
-app.use('/api/v1/usuarios', usuarioRoutes);
-app.use('/api/v1/clinicas', clinicaRoutes);
+
+// app.use('/api/v1/usuarios', usuarioRoutes);
+// app.use('/api/v1/clinicas', clinicaRoutes);
 app.use('/api/v1/especialidades', especialidadeRoutes);
 app.use('/api/v1/pacientes', pacienteRoutes);
-app.use('/api/v1/profissionais', profissionalRoutes);
+// app.use('/api/v1/profissionais', profissionalRoutes);
 
 app.use('/api/v1/profissional-clinica', profissionalClinicaRoutes);
 app.use('/api/v1/profissional-especialidade', profissionalEspecialidadeRoutes);
 app.use('/api/v1/clinica-especialidade', clinicaEspecRoutes);
 app.use('/api/v1/disponibilidades', disponibilidadeRoutes);
 app.use('/api/v1/agendamentos', agendamentoRoutes);
+
+
+// Autenticação: cadastro de paciente e login
+app.use('/api/v1/auth', authRoutes);
+
+// Gerenciamento de usuários: somente administradores
+app.use('/api/v1/usuarios', authMiddleware, adminMiddleware, usuarioRoutes);
+
+// Clínicas: somente administradores
+app.use('/api/v1/clinicas', authMiddleware, adminMiddleware, clinicaRoutes);
+
+// Profissionais: somente administradores
+app.use('/api/v1/profissionais', authMiddleware, adminMiddleware, profissionalRoutes);
 
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)
