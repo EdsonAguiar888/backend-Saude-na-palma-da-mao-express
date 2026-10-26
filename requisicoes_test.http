@@ -1,7 +1,9 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
-# @baseUrl = http://localhost:3000/api/v1
-@baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiMyIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTMwMTIwNTUsImV4cCI6MTc5MzAxNTY1NX0.tXTMhAkkba0dJ_doAJGnMd5Y30494K53QmotThXDasg
+@baseUrl = http://localhost:3000/api/v1
+# @baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
 ### 1. Verificar Saúde da API
 GET {{baseUrl}}/health
@@ -10,7 +12,7 @@ GET {{baseUrl}}/health
 ### MÓDULO: USUÁRIOS
 ### ==========================================
 
-### 1.1. Criar Novo Usuário (Paciente)
+### 1.1 Criar Novo Usuário (Paciente)
 POST {{baseUrl}}/auth/cadastro
 Content-Type: application/json
 
@@ -21,6 +23,27 @@ Content-Type: application/json
   "telefone": "81999998888"
   
 }
+### 1.2 Login Usuário
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{  
+  "email": "admin@admin.com",
+  "senha": "admin12345"  
+}
+
+
+
+### 1.3 Login Usuário
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+# {  
+#   "email": "edson@edson.com",
+#   "senha": "12345"  
+# }
+
+
 
 
 
@@ -51,6 +74,8 @@ Content-Type: application/json
 
 ### 4. Listar Todos os Usuários
 GET {{baseUrl}}/usuarios
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiMyIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTMwMTE0OTIsImV4cCI6MTc5MzAxNTI5Mn0.5v-4Lh7s2j27xH1n6h6eR2o9g6f7j9p5q6i1a3b4
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
