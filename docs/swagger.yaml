@@ -6,8 +6,8 @@ info:
     Documentação da API do Projeto Integrador Saúde na Palma da Mão.
     Os endpoints refletem as rotas registradas em src/server.js.
 servers:
-  - url: http://localhost:3000
-    description: Ambiente local
+  - url: /
+    description: Mesmo host da documentação (local ou Render)
 tags:
   - name: Saúde
   - name: Autenticação
