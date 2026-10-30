@@ -135,7 +135,7 @@ Certifique-se de ter instalado:
 ```bash
 git clone https://github.com/EdsonAguiar888/backend-Saude-na-palma-da-mao-express
 
-cd backend-saude-na-palma-mao-api
+cd backend-Saude-na-palma-da-mao-express
 ```
 
 ### 2. Instale as dependências
@@ -201,6 +201,10 @@ Em modo de desenvolvimento, com recarga automática habilitada:
 
 ```bash
 npm run dev
+```
+
+```bash
+npm run start
 ```
 
 O comando depende da configuração do `package.json`. Uma alternativa comum é utilizar `tsx` ou `ts-node-dev` para executar TypeScript durante o desenvolvimento.
