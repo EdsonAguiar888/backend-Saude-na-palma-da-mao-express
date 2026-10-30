@@ -70,14 +70,14 @@ app.use('/api/v1/agendamentos', agendamentoRoutes);
 // Autenticação: cadastro de paciente e login
 app.use('/api/v1/auth', authRoutes);
 
-// Gerenciamento de usuários: somente administradores
-app.use('/api/v1/usuarios', authMiddleware, adminMiddleware, usuarioRoutes);
+// Gerenciamento de usuários: 
+app.use('/api/v1/usuarios', authMiddleware, usuarioRoutes);
 
-// Clínicas: somente administradores
-app.use('/api/v1/clinicas', authMiddleware, adminMiddleware, clinicaRoutes);
+// Clínicas: 
+app.use('/api/v1/clinicas', authMiddleware, clinicaRoutes);
 
-// Profissionais: somente administradores
-app.use('/api/v1/profissionais', authMiddleware, adminMiddleware, profissionalRoutes);
+// Profissionais: 
+app.use('/api/v1/profissionais', authMiddleware, profissionalRoutes);
 
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)

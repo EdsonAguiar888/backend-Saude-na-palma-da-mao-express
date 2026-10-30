@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const AppDataSource = require('../config/database');
 const UsuarioSchema = require('../entities/Usuario');
 
@@ -7,6 +8,10 @@ class UsuarioService {
   }
 
   async criar(dados) {
+    // Garante que a senha seja sempre armazenada como hash
+    if (dados.senha_hash) {
+      dados.senha_hash = await bcrypt.hash(dados.senha_hash, 10);
+    }
     const usuario = this.usuarioRepository.create(dados);
     return await this.usuarioRepository.save(usuario);
   }

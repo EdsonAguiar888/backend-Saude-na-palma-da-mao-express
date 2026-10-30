@@ -1,12 +1,17 @@
 const { Router } = require('express');
 const clinicaController = require('../controllers/ClinicaController');
 
+const adminMiddleware = require('../middlewares/adminMiddleware');
+
+
 const router = Router();
 
-router.post('/', clinicaController.criar);
 router.get('/', clinicaController.listar);
 router.get('/:id', clinicaController.buscarPorId);
-router.put('/:id', clinicaController.atualizar);
-router.delete('/:id', clinicaController.deletar);
+
+
+router.post('/', adminMiddleware, clinicaController.criar);
+router.put('/:id', adminMiddleware, clinicaController.atualizar);
+router.delete('/:id', adminMiddleware, clinicaController.deletar);
 
 module.exports = router;

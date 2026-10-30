@@ -1,7 +1,7 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiMyIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTMwMTIwNTUsImV4cCI6MTc5MzAxNTY1NX0.tXTMhAkkba0dJ_doAJGnMd5Y30494K53QmotThXDasg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNCIsInRpcG9fdXN1YXJpbyI6IlBBQ0lFTlRFIiwiaWF0IjoxNzkzMzgxOTQ0LCJleHAiOjE3OTMzODU1NDR9.s-euA46hB_s9h2OAq4OWoQT7PaFDibfFWDe8-rCWIUo
 @baseUrl = http://localhost:3000/api/v1
 # @baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
@@ -28,7 +28,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {  
-  "email": "admin@admin.com",
+  "email": "admin1@admin1.com",
   "senha": "admin12345"  
 }
 
@@ -38,10 +38,10 @@ Content-Type: application/json
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
-# {  
-#   "email": "edson@edson.com",
-#   "senha": "12345"  
-# }
+{  
+  "email": "edson@edson.com",
+  "senha": "12345"  
+}
 
 
 
@@ -51,6 +51,7 @@ Content-Type: application/json
 ### 2. Criar Novo Usuário (Paciente)
 POST {{baseUrl}}/usuarios
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nome": "Jose Silva",
@@ -60,14 +61,15 @@ Content-Type: application/json
   "tipo_usuario": "PACIENTE"
 }
 
-### 3. Criar Novo Usuário (Profissional)
+### 3. Criar Novo Usuário ( PROFISSIONAL )
 POST {{baseUrl}}/usuarios
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "nome": "Dr. Carlos Souza",
-  "email": "carlos.souza@medico.com",
-  "senha_hash": "hash_senha_segura_456",
+  "nome": "Dr. Gabriel Souza",
+  "email": "gabriel.gabriel@medico.com",
+  "senha_hash": "12345",
   "telefone": "81988887777",
   "tipo_usuario": "PROFISSIONAL"
 }
@@ -105,6 +107,7 @@ HTTP/1.1 200 OK
 
 ### 5. Buscar Usuário por ID (Substitua 1 pelo ID desejado)
 GET {{baseUrl}}/usuarios/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -123,6 +126,7 @@ HTTP/1.1 200 OK
 ### 6. Atualizar Usuário por ID (Substitua 1 pelo ID desejado)
 PUT {{baseUrl}}/usuarios/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nome": "Maria Silva Santos",
@@ -131,6 +135,7 @@ Content-Type: application/json
 
 ### 7. Deletar Usuário por ID (Substitua 1 pelo ID desejado)
 DELETE {{baseUrl}}/usuarios/1
+Authorization: Bearer {{token}}
 
 
 
@@ -152,6 +157,8 @@ DELETE {{baseUrl}}/usuarios/1
 ### 8. Cadastrar Nova Clínica
 POST {{baseUrl}}/clinicas
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 {
   "nome": "Clínica Saúde Central",
@@ -168,6 +175,7 @@ Content-Type: application/json
 
 ### 9. Listar Todas as Clínicas
 GET {{baseUrl}}/clinicas
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -191,6 +199,7 @@ HTTP/1.1 200 OK
 
 ### 10. Buscar Clínica por ID
 GET {{baseUrl}}/clinicas/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -213,7 +222,8 @@ HTTP/1.1 200 OK
 
 ### 11. Atualizar Clínica por ID (Substitua 1 pelo ID desejado)
 PUT {{baseUrl}}/clinicas/1
-Content-Type: application/json
+Content-Type: application/json  
+Authorization: Bearer {{token}}
 
 {
   "nome": "Clínica Saúde Central Recife",
@@ -222,7 +232,7 @@ Content-Type: application/json
 
 ### 12. Deletar Clínica por ID (Substitua 1 pelo ID desejado)
 DELETE {{baseUrl}}/clinicas/1
-
+Authorization: Bearer {{token}}
 
 
 
@@ -243,6 +253,7 @@ DELETE {{baseUrl}}/clinicas/1
 ### 13. Cadastrar Nova Especialidade
 POST {{baseUrl}}/especialidades
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nome": "Pediatria",
@@ -251,6 +262,7 @@ Content-Type: application/json
 
 ### 14. Listar Todas as Especialidades
 GET {{baseUrl}}/especialidades
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -266,6 +278,7 @@ HTTP/1.1 200 OK
 
 ### 15. Buscar Especialidade por ID
 GET {{baseUrl}}/especialidades/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -280,6 +293,7 @@ HTTP/1.1 200 OK
 ### 16. Atualizar Especialidade por ID
 PUT {{baseUrl}}/especialidades/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "descricao": "Especialidade focada em cardiologia clínica e preventiva."
@@ -287,6 +301,7 @@ Content-Type: application/json
 
 ### 17. Deletar Especialidade por ID
 DELETE {{baseUrl}}/especialidades/1
+Authorization: Bearer {{token}}
 
 
 
@@ -308,6 +323,7 @@ DELETE {{baseUrl}}/especialidades/1
 ### 18. Cadastrar Novo Paciente (Associe um id_usuario existente)
 POST {{baseUrl}}/pacientes
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_usuario": 1,
@@ -318,6 +334,7 @@ Content-Type: application/json
 
 ### 19. Listar Todos os Pacientes
 GET {{baseUrl}}/pacientes
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -345,6 +362,7 @@ HTTP/1.1 200 OK
 
 ### 20. Buscar Paciente por ID
 GET {{baseUrl}}/pacientes/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -371,6 +389,7 @@ HTTP/1.1 200 OK
 ### 21. Atualizar Paciente por ID
 PUT {{baseUrl}}/pacientes/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "sexo": "M"
@@ -378,6 +397,7 @@ Content-Type: application/json
 
 ### 22. Deletar Paciente por ID
 DELETE {{baseUrl}}/pacientes/1
+Authorization: Bearer {{token}}
 
 
 
@@ -401,9 +421,10 @@ DELETE {{baseUrl}}/pacientes/1
 ### 23. Cadastrar Novo Profissional (Associe um id_usuario existente)
 POST {{baseUrl}}/profissionais
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "id_usuario": 2,
+  "id_usuario": 6,
   "cpf": "987.654.321-11",
   "conselho": "CRM",
   "registro_profissional": "123456-PE",
@@ -413,6 +434,7 @@ Content-Type: application/json
 
 ### 24. Listar Todos os Profissionais
 GET {{baseUrl}}/profissionais
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -441,6 +463,7 @@ HTTP/1.1 200 OK
 
 ### 25. Buscar Profissional por ID
 GET {{baseUrl}}/profissionais/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -468,6 +491,7 @@ HTTP/1.1 200 OK
 ### 26. Atualizar Profissional por ID
 PUT {{baseUrl}}/profissionais/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "ativo": true
@@ -475,6 +499,7 @@ Content-Type: application/json
 
 ### 27. Deletar Profissional por ID
 DELETE {{baseUrl}}/profissionais/1
+Authorization: Bearer {{token}}
 
 
 
@@ -498,6 +523,7 @@ DELETE {{baseUrl}}/profissionais/1
 ### 28. Vincular Profissional à Clínica
 POST {{baseUrl}}/profissional-clinica
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_profissional": 1,
@@ -507,6 +533,7 @@ Content-Type: application/json
 
 ### 29. Listar Vínculos Profissional-Clínica
 GET {{baseUrl}}/profissional-clinica
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -546,6 +573,7 @@ HTTP/1.1 200 OK
 
 ### 30. Buscar Vínculo por ID
 GET {{baseUrl}}/profissional-clinica/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -584,6 +612,7 @@ HTTP/1.1 200 OK
 ### 31. Atualizar Vínculo por ID
 PUT {{baseUrl}}/profissional-clinica/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "ativo": false
@@ -591,6 +620,7 @@ Content-Type: application/json
 
 ### 32. Deletar Vínculo por ID
 DELETE {{baseUrl}}/profissional-clinica/1
+Authorization: Bearer {{token}}
 
 
 
@@ -612,6 +642,7 @@ DELETE {{baseUrl}}/profissional-clinica/1
 ### 33. Associar Especialidade ao Profissional
 POST {{baseUrl}}/profissional-especialidade
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_profissional": 1,
@@ -620,6 +651,7 @@ Content-Type: application/json
 
 ### 34. Listar Associações Profissional-Especialidade
 GET {{baseUrl}}/profissional-especialidade
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -649,6 +681,7 @@ HTTP/1.1 200 OK
 
 ### 35. Buscar Associação por IDs compostos (:idProfissional/:idEspecialidade)
 GET {{baseUrl}}/profissional-especialidade/1/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -676,6 +709,7 @@ HTTP/1.1 200 OK
 
 ### 36. Deletar Associação por IDs compostos
 DELETE {{baseUrl}}/profissional-especialidade/1/1
+Authorization: Bearer {{token}}
 
 
 
@@ -698,6 +732,7 @@ DELETE {{baseUrl}}/profissional-especialidade/1/1
 ### 37. Associar Especialidade à Clínica
 POST {{baseUrl}}/clinica-especialidade
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_clinica": 1,
@@ -706,6 +741,7 @@ Content-Type: application/json
 
 ### 38. Listar Associações Clínica-Especialidade
 GET {{baseUrl}}/clinica-especialidade
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -740,6 +776,7 @@ HTTP/1.1 200 OK
 
 ### 39. Buscar Associação por IDs compostos (:idClinica/:idEspecialidade)
 GET {{baseUrl}}/clinica-especialidade/1/1
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -775,6 +812,7 @@ HTTP/1.1 200 OK
 
 ### 40. Deletar Associação por IDs compostos
 DELETE {{baseUrl}}/clinica-especialidade/1/1
+Authorization: Bearer {{token}}
 
 
 
@@ -799,6 +837,7 @@ DELETE {{baseUrl}}/clinica-especialidade/1/1
 ### 41. Cadastrar Nova Disponibilidade
 POST {{baseUrl}}/disponibilidades
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_profissional_clinica": 1,
@@ -811,6 +850,7 @@ Content-Type: application/json
 
 ### 42. Listar Todas as Disponibilidades
 GET {{baseUrl}}/disponibilidades
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -836,6 +876,7 @@ HTTP/1.1 200 OK
 
 ### 43. Buscar Disponibilidade por ID
 GET {{baseUrl}}/disponibilidades/13
+Authorization: Bearer {{token}}
 
 HTTP/1.1 200 OK
 
@@ -860,6 +901,7 @@ HTTP/1.1 200 OK
 ### 44. Atualizar Disponibilidade por ID
 PUT {{baseUrl}}/disponibilidades/12
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "status": "BLOQUEADO"
@@ -867,6 +909,7 @@ Content-Type: application/json
 
 ### 45. Deletar Disponibilidade por ID
 DELETE {{baseUrl}}/disponibilidades/12
+Authorization: Bearer {{token}}
 
 
 
@@ -889,6 +932,7 @@ DELETE {{baseUrl}}/disponibilidades/12
 ### 46. Criar Novo Agendamento
 POST {{baseUrl}}/agendamentos
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "id_paciente": 2,
@@ -901,6 +945,7 @@ Content-Type: application/json
 
 ### 47. Listar Todos os Agendamentos
 GET {{baseUrl}}/agendamentos
+Authorization: Bearer {{token}}
 
 RETORNO
 HTTP/1.1 200 OK
@@ -941,6 +986,7 @@ HTTP/1.1 200 OK
 
 ### 48. Buscar Agendamento por ID
 GET {{baseUrl}}/agendamentos/10
+Authorization: Bearer {{token}}
 
 RETORNO 
 HTTP/1.1 200 OK
@@ -980,6 +1026,7 @@ HTTP/1.1 200 OK
 ### 49. Atualizar Agendamento por ID
 PUT {{baseUrl}}/agendamentos/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "status": "CONCLUIDO"
@@ -987,3 +1034,4 @@ Content-Type: application/json
 
 ### 50. Deletar Agendamento por ID
 DELETE {{baseUrl}}/agendamentos/1
+Authorization: Bearer {{token}}
