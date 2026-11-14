@@ -1,7 +1,7 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNCIsInRpcG9fdXN1YXJpbyI6IlBBQ0lFTlRFIiwiaWF0IjoxNzkzMzgxOTQ0LCJleHAiOjE3OTMzODU1NDR9.s-euA46hB_s9h2OAq4OWoQT7PaFDibfFWDe8-rCWIUo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNyIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTQ2MjIzNjgsImV4cCI6MTc5NDY2NTU2OH0.V9CxeOSGQkBgrwFq9zDvJejfHXwpH4AgDxpXgPitWiM
 @baseUrl = http://localhost:3000/api/v1
 # @baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
@@ -28,7 +28,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {  
-  "email": "admin1@admin1.com",
+  "email": "admin3@admin3.com",
   "senha": "admin12345"  
 }
 
@@ -1034,4 +1034,75 @@ Authorization: Bearer {{token}}
 
 ### 50. Deletar Agendamento por ID
 DELETE {{baseUrl}}/agendamentos/1
+Authorization: Bearer {{token}}
+
+
+
+
+### ========================================================================================================
+### ========================================================================================================
+### ========================================================================================================
+
+
+
+
+
+
+### ==========================================
+### MÓDULO: PRE-TRIAGEM
+### ==========================================
+
+@idTriagem = 2
+
+
+
+
+
+### 2. CRIAR PRÉ-TRIAGEM
+POST {{baseUrl}}/pre-triagens
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_paciente": 1,
+  "id_especialidade_sugerida": 2,
+  "descricao_sintomas": "Dor de cabeça e tontura",
+  "duracao_sintomas": "2 dias",
+  "intensidade": 5,
+  "nivel_prioridade": "MEDIA",
+  "resumo_ia": "Resumo fictício para teste acadêmico."
+}
+
+
+### 3. LISTAR TODAS AS PRÉ-TRIAGENS
+GET {{baseUrl}}/pre-triagens
+Authorization: Bearer {{token}}
+
+
+### 4. BUSCAR PRÉ-TRIAGEM POR ID
+GET {{baseUrl}}/pre-triagens/{{idTriagem}}
+Authorization: Bearer {{token}}
+
+
+### 5. ATUALIZAR PRÉ-TRIAGEM
+PUT {{baseUrl}}/pre-triagens/{{idTriagem}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "descricao_sintomas": "Dor de cabeça persistente",
+  "duracao_sintomas": "3 dias",
+  "intensidade": 7,
+  "nivel_prioridade": "ALTA",
+  "resumo_ia": "Resumo fictício atualizado para teste."
+}
+
+
+### 6. EXCLUIR PRÉ-TRIAGEM
+DELETE {{baseUrl}}/pre-triagens/{{idTriagem}}
+Authorization: Bearer {{token}}
+
+
+### 7. VERIFICAR REGISTRO EXCLUÍDO
+GET {{baseUrl}}/pre-triagens/{{idTriagem}}
 Authorization: Bearer {{token}}

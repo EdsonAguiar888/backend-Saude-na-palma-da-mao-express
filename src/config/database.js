@@ -9,13 +9,14 @@ const ProfissionalEspecialidadeSchema = require('../entities/ProfissionalEspecia
 const ClinicaEspecSchema = require('../entities/ClinicaEspec');
 const DisponibilidadeSchema = require('../entities/Disponibilidade');
 const AgendamentoSchema = require('../entities/Agendamento');
+const PreTriagemSchema = require('../entities/PreTriagem');
 require('dotenv').config();
 
 const AppDataSource = new DataSource({
   type: 'postgres',
 
-  host: process.env.DB_HOST || 'dpg-dbdqr6jrjlhs738318d0-a',
-  // host: process.env.DB_HOST || 'localhost',
+  // host: process.env.DB_HOST || 'dpg-dbdqr6jrjlhs738318d0-a',
+  host: process.env.DB_HOST || 'localhost',
 
   port: parseInt(process.env.DB_PORT, 10) || 5432,
   username: process.env.DB_USER || 'projeto_user',
@@ -38,6 +39,7 @@ const AppDataSource = new DataSource({
     ClinicaEspecSchema,
     DisponibilidadeSchema,
     AgendamentoSchema,
+    PreTriagemSchema,
   ],
   subscribers: [],
   migrations: [],
