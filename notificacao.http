@@ -1,0 +1,59 @@
+
+@baseUrl = http://localhost:3000/api/v1
+@token = COLE_SEU_TOKEN_JWT_AQUI
+@idNotificacao = 1
+@idUsuario = 1
+
+### 1. Criar notificação
+POST {{baseUrl}}/notificacoes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_usuario": {{idUsuario}},
+  "titulo": "Lembrete de consulta",
+  "mensagem": "Você possui uma consulta agendada.",
+  "tipo": "LEMBRETE"
+}
+
+###
+
+### 2. Listar todas as notificações
+GET {{baseUrl}}/notificacoes
+Authorization: Bearer {{token}}
+
+###
+
+### 3. Listar notificações por usuário
+GET {{baseUrl}}/notificacoes/usuario/{{idUsuario}}
+Authorization: Bearer {{token}}
+
+###
+
+### 4. Buscar notificação por ID
+GET {{baseUrl}}/notificacoes/{{idNotificacao}}
+Authorization: Bearer {{token}}
+
+###
+
+### 5. Atualizar notificação
+PUT {{baseUrl}}/notificacoes/{{idNotificacao}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "titulo": "Consulta confirmada",
+  "mensagem": "Sua consulta foi confirmada."
+}
+
+###
+
+### 6. Marcar notificação como lida
+PATCH {{baseUrl}}/notificacoes/{{idNotificacao}}/lida
+Authorization: Bearer {{token}}
+
+###
+
+### 7. Excluir notificação
+DELETE {{baseUrl}}/notificacoes/{{idNotificacao}}
+Authorization: Bearer {{token}}
