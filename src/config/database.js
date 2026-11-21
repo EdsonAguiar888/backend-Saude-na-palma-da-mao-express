@@ -10,6 +10,9 @@ const ClinicaEspecSchema = require('../entities/ClinicaEspec');
 const DisponibilidadeSchema = require('../entities/Disponibilidade');
 const AgendamentoSchema = require('../entities/Agendamento');
 const PreTriagemSchema = require('../entities/PreTriagem');
+const TriagemAgendamentoSchema = require('../entities/TriagemAgendamento');
+const NotificacaoSchema = require('../entities/Notificacao');
+
 const MensagemTriagemSchema = require('../entities/MensagemTriagem');
 require('dotenv').config();
 
@@ -41,6 +44,8 @@ const AppDataSource = new DataSource({
     DisponibilidadeSchema,
     AgendamentoSchema,
     PreTriagemSchema,
+    TriagemAgendamentoSchema,
+    NotificacaoSchema,
     MensagemTriagemSchema,
   ],
   subscribers: [],
