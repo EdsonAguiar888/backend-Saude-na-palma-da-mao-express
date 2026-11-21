@@ -49,6 +49,7 @@ const clinicaEspecRoutes = require('./routes/clinicaEspecRoutes');
 const disponibilidadeRoutes = require('./routes/disponibilidadeRoutes');
 const agendamentoRoutes = require('./routes/agendamentoRoutes');
 const preTriagemRoutes = require('./routes/preTriagemRoutes');
+const mensagemTriagemRoutes = require('./routes/mensagemTriagemRoutes');
 
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middlewares/authMiddleware');
@@ -71,6 +72,9 @@ app.use('/api/v1/agendamentos', agendamentoRoutes);
 
 // Gerenciamento de pre triagem
 app.use('/api/v1/pre-triagens', authMiddleware, preTriagemRoutes);
+
+// Mensagem que serar adicionada a pretriagem
+app.use('/api/v1/mensagens-triagem', authMiddleware, mensagemTriagemRoutes);
 
 // Autenticação: cadastro de paciente e login
 app.use('/api/v1/auth', authRoutes);
