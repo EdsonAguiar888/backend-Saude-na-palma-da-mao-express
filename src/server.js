@@ -49,16 +49,18 @@ const clinicaEspecRoutes = require('./routes/clinicaEspecRoutes');
 const disponibilidadeRoutes = require('./routes/disponibilidadeRoutes');
 const agendamentoRoutes = require('./routes/agendamentoRoutes');
 const preTriagemRoutes = require('./routes/preTriagemRoutes');
+const triagemAgendamentoRoutes = require('./routes/triagemAgendamentoRoutes');
+const notificacaoRoutes = require('./routes/notificacaoRoutes');
 
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middlewares/authMiddleware');
 const adminMiddleware = require('./middlewares/adminMiddleware');
 
-
 // app.use('/api/v1/usuarios', usuarioRoutes);
 // app.use('/api/v1/clinicas', clinicaRoutes);
 app.use('/api/v1/especialidades', especialidadeRoutes);
-app.use('/api/v1/pacientes', pacienteRoutes);
+app.use('/api/v1/pacientes', authMiddleware, pacienteRoutes);
+//app.use('/api/v1/pacientes', pacienteRoutes);
 // app.use('/api/v1/profissionais', profissionalRoutes);
 
 app.use('/api/v1/profissional-clinica', profissionalClinicaRoutes);
@@ -67,23 +69,26 @@ app.use('/api/v1/clinica-especialidade', clinicaEspecRoutes);
 app.use('/api/v1/disponibilidades', disponibilidadeRoutes);
 app.use('/api/v1/agendamentos', agendamentoRoutes);
 
-
-
 // Gerenciamento de pre triagem
 app.use('/api/v1/pre-triagens', authMiddleware, preTriagemRoutes);
+app.use(
+  '/api/v1/triagem-agendamentos',
+  authMiddleware,
+  triagemAgendamentoRoutes
+);
+app.use('/api/v1/notificacoes', authMiddleware, notificacaoRoutes);
 
 // Autenticação: cadastro de paciente e login
 app.use('/api/v1/auth', authRoutes);
 
-// Gerenciamento de usuários: 
+// Gerenciamento de usuários:
 app.use('/api/v1/usuarios', authMiddleware, usuarioRoutes);
 
-// Clínicas: 
+// Clínicas:
 app.use('/api/v1/clinicas', authMiddleware, clinicaRoutes);
 
-// Profissionais: 
+// Profissionais:
 app.use('/api/v1/profissionais', authMiddleware, profissionalRoutes);
-
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)
 app.get('/api/v1/health', (req, res) => {
