@@ -1,7 +1,7 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNyIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTQ2MjIzNjgsImV4cCI6MTc5NDY2NTU2OH0.V9CxeOSGQkBgrwFq9zDvJejfHXwpH4AgDxpXgPitWiM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNSIsInRpcG9fdXN1YXJpbyI6IlBBQ0lFTlRFIiwiaWF0IjoxNzk1Mjg4ODk4LCJleHAiOjE3OTUyOTI0OTh9.JqF1hJ38DBGQxIbxXIga-IaPcNsdo-IaJFliW62-Iyc
 @baseUrl = http://localhost:3000/api/v1
 # @baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "nome": "Edson Silva",
-  "email": "edson@edson.com",
+ "email": "edson@edson.com",
   "senha": "12345",
   "telefone": "81999998888"
   
@@ -1052,11 +1052,8 @@ Authorization: Bearer {{token}}
 ### MÓDULO: PRE-TRIAGEM
 ### ==========================================
 
+### Variavel do id
 @idTriagem = 2
-
-
-
-
 
 ### 2. CRIAR PRÉ-TRIAGEM
 POST {{baseUrl}}/pre-triagens
@@ -1064,7 +1061,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "id_paciente": 1,
+  "id_paciente": 2,
   "id_especialidade_sugerida": 2,
   "descricao_sintomas": "Dor de cabeça e tontura",
   "duracao_sintomas": "2 dias",
@@ -1106,3 +1103,90 @@ Authorization: Bearer {{token}}
 ### 7. VERIFICAR REGISTRO EXCLUÍDO
 GET {{baseUrl}}/pre-triagens/{{idTriagem}}
 Authorization: Bearer {{token}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### VARIÁVEIS
+
+@idTriagem = 2
+@idMensagem = 4
+
+
+
+### 2. CRIAR MENSAGEM DO PACIENTE
+POST {{baseUrl}}/mensagens-triagem
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_triagem": {{idTriagem}},
+  "autor": "PACIENTE",
+  "conteudo": "Estou sentindo dor de cabeça há dois dias.",
+  "ordem": 1
+}
+
+
+### 3. CRIAR MENSAGEM DA IA
+POST {{baseUrl}}/mensagens-triagem
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_triagem": {{idTriagem}},
+  "autor": "IA",
+  "conteudo": "Você está sentindo algum outro sintoma?",
+  "ordem": 2
+}
+
+
+### 4. LISTAR TODAS AS MENSAGENS
+GET {{baseUrl}}/mensagens-triagem
+Authorization: Bearer {{token}}
+
+
+### 5. BUSCAR MENSAGEM POR ID
+GET {{baseUrl}}/mensagens-triagem/{{idMensagem}}
+Authorization: Bearer {{token}}
+
+
+### 6. ATUALIZAR MENSAGEM
+PUT {{baseUrl}}/mensagens-triagem/{{idMensagem}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "conteudo": "Estou sentindo dor na perna há três dias."
+}
+
+
+### 7. EXCLUIR MENSAGEM
+DELETE {{baseUrl}}/mensagens-triagem/{{idMensagem}}
+Authorization: Bearer {{token}}
+
+
+### 8. VERIFICAR MENSAGEM EXCLUÍDA
+GET {{baseUrl}}/mensagens-triagem/{{idMensagem}}
+Authorization: Bearer {{token}}
+
+
+
+
+
+
+
+
+
+
+

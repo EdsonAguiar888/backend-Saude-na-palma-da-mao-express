@@ -13,6 +13,7 @@ const PreTriagemSchema = require('../entities/PreTriagem');
 const TriagemAgendamentoSchema = require('../entities/TriagemAgendamento');
 const NotificacaoSchema = require('../entities/Notificacao');
 
+const MensagemTriagemSchema = require('../entities/MensagemTriagem');
 require('dotenv').config();
 
 const AppDataSource = new DataSource({
@@ -45,6 +46,7 @@ const AppDataSource = new DataSource({
     PreTriagemSchema,
     TriagemAgendamentoSchema,
     NotificacaoSchema,
+    MensagemTriagemSchema,
   ],
   subscribers: [],
   migrations: [],

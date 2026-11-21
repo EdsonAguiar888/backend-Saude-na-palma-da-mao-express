@@ -51,6 +51,7 @@ const agendamentoRoutes = require('./routes/agendamentoRoutes');
 const preTriagemRoutes = require('./routes/preTriagemRoutes');
 const triagemAgendamentoRoutes = require('./routes/triagemAgendamentoRoutes');
 const notificacaoRoutes = require('./routes/notificacaoRoutes');
+const mensagemTriagemRoutes = require('./routes/mensagemTriagemRoutes');
 
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middlewares/authMiddleware');
@@ -77,6 +78,9 @@ app.use(
   triagemAgendamentoRoutes
 );
 app.use('/api/v1/notificacoes', authMiddleware, notificacaoRoutes);
+
+// Mensagem que serar adicionada a pretriagem
+app.use('/api/v1/mensagens-triagem', authMiddleware, mensagemTriagemRoutes);
 
 // Autenticação: cadastro de paciente e login
 app.use('/api/v1/auth', authRoutes);
