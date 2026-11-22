@@ -236,10 +236,10 @@ Authorization: Bearer {{token}}
 
 
 
-### ========================================================================================================
-### ========================================================================================================
-### ========================================================================================================
 
+### ========================================================================================================
+### ========================================================================================================
+### ========================================================================================================
 
 
 
@@ -302,7 +302,6 @@ Authorization: Bearer {{token}}
 ### 17. Deletar Especialidade por ID
 DELETE {{baseUrl}}/especialidades/1
 Authorization: Bearer {{token}}
-
 
 
 
@@ -402,9 +401,6 @@ Authorization: Bearer {{token}}
 
 
 
-
-
-
 ### ========================================================================================================
 ### ========================================================================================================
 ### ========================================================================================================
@@ -500,9 +496,6 @@ Authorization: Bearer {{token}}
 ### 27. Deletar Profissional por ID
 DELETE {{baseUrl}}/profissionais/1
 Authorization: Bearer {{token}}
-
-
-
 
 
 
@@ -625,7 +618,6 @@ Authorization: Bearer {{token}}
 
 
 
-
 ### ========================================================================================================
 ### ========================================================================================================
 ### ========================================================================================================
@@ -714,12 +706,10 @@ Authorization: Bearer {{token}}
 
 
 
-
-
-
 ### ========================================================================================================
 ### ========================================================================================================
 ### ========================================================================================================
+
 
 
 
@@ -817,13 +807,9 @@ Authorization: Bearer {{token}}
 
 
 
-
-
-
 ### ========================================================================================================
 ### ========================================================================================================
 ### ========================================================================================================
-
 
 
 
@@ -910,8 +896,6 @@ Authorization: Bearer {{token}}
 ### 45. Deletar Disponibilidade por ID
 DELETE {{baseUrl}}/disponibilidades/12
 Authorization: Bearer {{token}}
-
-
 
 
 
@@ -1076,6 +1060,9 @@ GET {{baseUrl}}/pre-triagens
 Authorization: Bearer {{token}}
 
 
+
+
+
 ### 4. BUSCAR PRÉ-TRIAGEM POR ID
 GET {{baseUrl}}/pre-triagens/{{idTriagem}}
 Authorization: Bearer {{token}}
@@ -1107,12 +1094,18 @@ Authorization: Bearer {{token}}
 
 
 
+### ========================================================================================================
+### ========================================================================================================
+### ========================================================================================================
 
 
 
 
 
 
+### ==========================================
+### MÓDULO: MENSAGEM TRIAGEM
+### ==========================================
 
 
 
@@ -1183,10 +1176,156 @@ Authorization: Bearer {{token}}
 
 
 
+### ========================================================================================================
+### ========================================================================================================
+### ========================================================================================================
+
+
+
+
+### ==========================================
+### MÓDULO: TRIAGEM AGENDAMENTOS
+### ==========================================
+
+### VARIÁVEIS
+
+@idTriagem = 1
+@idAgendamento = 1
+@idOutroAgendamento = 2
+@idAssociacao = 1
+
+
+### 1. LOGIN PARA OBTER TOKEN JWT
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "SEU_EMAIL",
+  "senha": "SUA_SENHA"
+}
+
+
+### 2. CRIAR ASSOCIAÇÃO
+POST {{baseUrl}}/triagem-agendamentos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_triagem": {{idTriagem}},
+  "id_agendamento": {{idAgendamento}}
+}
+
+
+### 3. LISTAR ASSOCIAÇÕES
+GET {{baseUrl}}/triagem-agendamentos
+Authorization: Bearer {{token}}
+
+
+### 4. BUSCAR ASSOCIAÇÃO POR ID
+GET {{baseUrl}}/triagem-agendamentos/{{idAssociacao}}
+Authorization: Bearer {{token}}
+
+
+### 5. TESTAR PRÉ-TRIAGEM DUPLICADA
+POST {{baseUrl}}/triagem-agendamentos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_triagem": {{idTriagem}},
+  "id_agendamento": {{idOutroAgendamento}}
+}
+
+
+### 6. ATUALIZAR ASSOCIAÇÃO
+PUT {{baseUrl}}/triagem-agendamentos/{{idAssociacao}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_agendamento": {{idOutroAgendamento}}
+}
+
+
+### 7. EXCLUIR ASSOCIAÇÃO
+DELETE {{baseUrl}}/triagem-agendamentos/{{idAssociacao}}
+Authorization: Bearer {{token}}
+
+
+### 8. VERIFICAR EXCLUSÃO
+GET {{baseUrl}}/triagem-agendamentos/{{idAssociacao}}
+Authorization: Bearer {{token}}
+
+
+
+
+### ========================================================================================================
+### ========================================================================================================
+### ========================================================================================================
 
 
 
 
 
 
+### ==========================================
+### MÓDULO: NOTIFICAÇÕES
+### ==========================================
 
+
+@idNotificacao = 1
+@idUsuario = 1
+
+### 1. Criar notificação
+POST {{baseUrl}}/notificacoes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_usuario": {{idUsuario}},
+  "titulo": "Lembrete de consulta",
+  "mensagem": "Você possui uma consulta agendada.",
+  "tipo": "LEMBRETE"
+}
+
+###
+
+### 2. Listar todas as notificações
+GET {{baseUrl}}/notificacoes
+Authorization: Bearer {{token}}
+
+###
+
+### 3. Listar notificações por usuário
+GET {{baseUrl}}/notificacoes/usuario/{{idUsuario}}
+Authorization: Bearer {{token}}
+
+###
+
+### 4. Buscar notificação por ID
+GET {{baseUrl}}/notificacoes/{{idNotificacao}}
+Authorization: Bearer {{token}}
+
+###
+
+### 5. Atualizar notificação
+PUT {{baseUrl}}/notificacoes/{{idNotificacao}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "titulo": "Consulta confirmada",
+  "mensagem": "Sua consulta foi confirmada."
+}
+
+###
+
+### 6. Marcar notificação como lida
+PATCH {{baseUrl}}/notificacoes/{{idNotificacao}}/lida
+Authorization: Bearer {{token}}
+
+###
+
+### 7. Excluir notificação
+DELETE {{baseUrl}}/notificacoes/{{idNotificacao}}
+Authorization: Bearer {{token}}
