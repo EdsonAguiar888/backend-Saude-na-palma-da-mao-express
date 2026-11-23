@@ -21,6 +21,10 @@ tags:
   - name: Clínica-Especialidade
   - name: Disponibilidades
   - name: Agendamentos
+  - name: Pré-Triagens
+  - name: Mensagens de Triagem
+  - name: Triagem-Agendamento
+  - name: Notificações
 paths:
   /api/v1/health:
     get:
@@ -768,6 +772,360 @@ paths:
         '204': { description: Agendamento excluído }
         '400': { $ref: '#/components/responses/ErroRequisicao' }
 
+  /api/v1/pre-triagens:
+    get:
+      tags: [Pré-Triagens]
+      summary: Lista pré-triagens
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista pré-triagens
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/PreTriagem' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    post:
+      tags: [Pré-Triagens]
+      summary: Cria pretriagem
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PreTriagemInput' }
+      responses:
+        '201':
+          description: Cria pretriagem
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PreTriagem' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/pre-triagens/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Pré-Triagens]
+      summary: Busca pretriagem por ID
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Busca pretriagem por ID
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PreTriagem' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    put:
+      tags: [Pré-Triagens]
+      summary: Atualiza pretriagem
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PreTriagemInput' }
+      responses:
+        '200':
+          description: Atualiza pretriagem
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PreTriagem' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    delete:
+      tags: [Pré-Triagens]
+      summary: Exclui pretriagem
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Exclui pretriagem
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/mensagens-triagem:
+    get:
+      tags: [Mensagens de Triagem]
+      summary: Lista mensagens de triagem
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista mensagens de triagem
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/MensagemTriagem' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    post:
+      tags: [Mensagens de Triagem]
+      summary: Cria mensagemtriagem
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MensagemTriagemInput' }
+      responses:
+        '201':
+          description: Cria mensagemtriagem
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MensagemTriagem' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/mensagens-triagem/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Mensagens de Triagem]
+      summary: Busca mensagemtriagem por ID
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Busca mensagemtriagem por ID
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MensagemTriagem' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    put:
+      tags: [Mensagens de Triagem]
+      summary: Atualiza mensagemtriagem
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MensagemTriagemInput' }
+      responses:
+        '200':
+          description: Atualiza mensagemtriagem
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MensagemTriagem' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    delete:
+      tags: [Mensagens de Triagem]
+      summary: Exclui mensagemtriagem
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Exclui mensagemtriagem
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/triagem-agendamentos:
+    get:
+      tags: [Triagem-Agendamento]
+      summary: Lista associações de triagem e agendamento
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista associações de triagem e agendamento
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/TriagemAgendamento' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    post:
+      tags: [Triagem-Agendamento]
+      summary: Cria triagemagendamento
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TriagemAgendamentoInput' }
+      responses:
+        '201':
+          description: Cria triagemagendamento
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TriagemAgendamento' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/triagem-agendamentos/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Triagem-Agendamento]
+      summary: Busca triagemagendamento por ID
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Busca triagemagendamento por ID
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TriagemAgendamento' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    put:
+      tags: [Triagem-Agendamento]
+      summary: Atualiza triagemagendamento
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TriagemAgendamentoInput' }
+      responses:
+        '200':
+          description: Atualiza triagemagendamento
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TriagemAgendamento' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    delete:
+      tags: [Triagem-Agendamento]
+      summary: Exclui triagemagendamento
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Exclui triagemagendamento
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/notificacoes:
+    get:
+      tags: [Notificações]
+      summary: Lista notificações
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista notificações
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Notificacao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    post:
+      tags: [Notificações]
+      summary: Cria notificacao
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NotificacaoInput' }
+      responses:
+        '201':
+          description: Cria notificacao
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Notificacao' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/notificacoes/usuario/{idUsuario}:
+    parameters:
+      - name: idUsuario
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+    get:
+      tags: [Notificações]
+      summary: Lista notificações de um usuário
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista notificações de um usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Notificacao' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/notificacoes/{id}/lida:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    patch:
+      tags: [Notificações]
+      summary: Marca notificação como lida
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Marca notificação como lida
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Notificacao' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+  /api/v1/notificacoes/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Notificações]
+      summary: Busca notificacao por ID
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Busca notificacao por ID
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Notificacao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    put:
+      tags: [Notificações]
+      summary: Atualiza notificacao
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NotificacaoInput' }
+      responses:
+        '200':
+          description: Atualiza notificacao
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Notificacao' }
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+    delete:
+      tags: [Notificações]
+      summary: Exclui notificacao
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Exclui notificacao
+        '400': { $ref: '#/components/responses/ErroRequisicao' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+
 components:
   securitySchemes:
     BearerAuth:
@@ -1093,3 +1451,71 @@ components:
             profissionalClinica:
               { $ref: '#/components/schemas/ProfissionalClinica' }
             especialidade: { $ref: '#/components/schemas/Especialidade' }
+    PreTriagemInput:
+      type: object
+      required: [id_paciente, descricao_sintomas]
+      properties:
+        id_paciente: { type: integer, format: int64, example: 2 }
+        id_especialidade_sugerida: { type: integer, format: int64, nullable: true, example: 2 }
+        descricao_sintomas: { type: string, example: Dor de cabeça e tontura }
+        duracao_sintomas: { type: string, example: 2 dias }
+        intensidade: { type: integer, example: 5 }
+        nivel_prioridade: { type: string, enum: [BAIXA, MEDIA, ALTA], example: MEDIA }
+        resumo_ia: { type: string, nullable: true, example: Resumo fictício para teste acadêmico. }
+    PreTriagem:
+      allOf:
+        - $ref: '#/components/schemas/PreTriagemInput'
+        - type: object
+          properties:
+            id_triagem: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            paciente: { $ref: '#/components/schemas/Paciente' }
+            especialidadeSugerida: { $ref: '#/components/schemas/Especialidade' }
+    MensagemTriagemInput:
+      type: object
+      required: [id_triagem, autor, conteudo, ordem]
+      properties:
+        id_triagem: { type: integer, format: int64, example: 2 }
+        autor: { type: string, enum: [PACIENTE, IA], example: PACIENTE }
+        conteudo: { type: string, example: Estou sentindo dor de cabeça há dois dias. }
+        ordem: { type: integer, example: 1 }
+    MensagemTriagem:
+      allOf:
+        - $ref: '#/components/schemas/MensagemTriagemInput'
+        - type: object
+          properties:
+            id_mensagem: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            preTriagem: { $ref: '#/components/schemas/PreTriagem' }
+    TriagemAgendamentoInput:
+      type: object
+      required: [id_triagem, id_agendamento]
+      properties:
+        id_triagem: { type: integer, format: int64, example: 1, description: Uma pré-triagem só pode estar vinculada a um agendamento. }
+        id_agendamento: { type: integer, format: int64, example: 1 }
+    TriagemAgendamento:
+      allOf:
+        - $ref: '#/components/schemas/TriagemAgendamentoInput'
+        - type: object
+          properties:
+            id_triagem_agendamento: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            preTriagem: { $ref: '#/components/schemas/PreTriagem' }
+            agendamento: { $ref: '#/components/schemas/Agendamento' }
+    NotificacaoInput:
+      type: object
+      required: [id_usuario, titulo, mensagem, tipo]
+      properties:
+        id_usuario: { type: integer, format: int64, example: 1 }
+        titulo: { type: string, maxLength: 150, example: Lembrete de consulta }
+        mensagem: { type: string, example: Você possui uma consulta agendada. }
+        tipo: { type: string, enum: [AGENDAMENTO, LEMBRETE, SISTEMA], example: LEMBRETE }
+        lida: { type: boolean, default: false }
+    Notificacao:
+      allOf:
+        - $ref: '#/components/schemas/NotificacaoInput'
+        - type: object
+          properties:
+            id_notificacao: { type: integer, format: int64, readOnly: true }
+            criado_em: { type: string, format: date-time, readOnly: true }
+            usuario: { $ref: '#/components/schemas/Usuario' }
