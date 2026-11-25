@@ -57,42 +57,86 @@ const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middlewares/authMiddleware');
 const adminMiddleware = require('./middlewares/adminMiddleware');
 
-// app.use('/api/v1/usuarios', usuarioRoutes);
-// app.use('/api/v1/clinicas', clinicaRoutes);
-app.use('/api/v1/especialidades', especialidadeRoutes);
-app.use('/api/v1/pacientes', authMiddleware, pacienteRoutes);
-//app.use('/api/v1/pacientes', pacienteRoutes);
-// app.use('/api/v1/profissionais', profissionalRoutes);
 
-app.use('/api/v1/profissional-clinica', profissionalClinicaRoutes);
-app.use('/api/v1/profissional-especialidade', profissionalEspecialidadeRoutes);
-app.use('/api/v1/clinica-especialidade', clinicaEspecRoutes);
-app.use('/api/v1/disponibilidades', disponibilidadeRoutes);
-app.use('/api/v1/agendamentos', agendamentoRoutes);
-
-// Gerenciamento de pre triagem
-app.use('/api/v1/pre-triagens', authMiddleware, preTriagemRoutes);
-app.use(
-  '/api/v1/triagem-agendamentos',
-  authMiddleware,
-  triagemAgendamentoRoutes
-);
-app.use('/api/v1/notificacoes', authMiddleware, notificacaoRoutes);
-
-// Mensagem que serar adicionada a pretriagem
-app.use('/api/v1/mensagens-triagem', authMiddleware, mensagemTriagemRoutes);
 
 // Autenticação: cadastro de paciente e login
 app.use('/api/v1/auth', authRoutes);
 
-// Gerenciamento de usuários:
+// Gerenciamento de usuários
 app.use('/api/v1/usuarios', authMiddleware, usuarioRoutes);
 
-// Clínicas:
+// Gerenciamento de clínicas
 app.use('/api/v1/clinicas', authMiddleware, clinicaRoutes);
 
-// Profissionais:
+// Gerenciamento de especialidades
+app.use('/api/v1/especialidades', authMiddleware, especialidadeRoutes);
+
+// Gerenciamento de pacientes
+app.use('/api/v1/pacientes', authMiddleware, pacienteRoutes);
+
+// Gerenciamento de profissionais
 app.use('/api/v1/profissionais', authMiddleware, profissionalRoutes);
+
+// Relacionamento profissional e clínica
+app.use('/api/v1/profissional-clinica', authMiddleware, profissionalClinicaRoutes);
+
+// Relacionamento profissional e especialidade
+app.use('/api/v1/profissional-especialidade', authMiddleware, profissionalEspecialidadeRoutes);
+
+// Gerenciamento de agendamentos
+app.use('/api/v1/agendamentos', authMiddleware, agendamentoRoutes);
+
+// Gerenciamento de pré-triagens
+app.use('/api/v1/pre-triagens', authMiddleware, preTriagemRoutes);
+
+// Gerenciamento de mensagens de triagem
+app.use('/api/v1/mensagens-triagem', authMiddleware, mensagemTriagemRoutes);
+
+// Associação entre triagem e agendamento
+app.use('/api/v1/triagem-agendamentos', authMiddleware, triagemAgendamentoRoutes);
+
+// Gerenciamento de notificações
+app.use('/api/v1/notificacoes', authMiddleware, notificacaoRoutes);
+
+
+
+// app.use('/api/v1/especialidades', especialidadeRoutes);
+// app.use('/api/v1/pacientes', authMiddleware, pacienteRoutes);
+
+// app.use('/api/v1/profissional-clinica', profissionalClinicaRoutes);
+// app.use('/api/v1/profissional-especialidade', profissionalEspecialidadeRoutes);
+// app.use('/api/v1/clinica-especialidade', clinicaEspecRoutes);
+// app.use('/api/v1/disponibilidades', disponibilidadeRoutes);
+// app.use('/api/v1/agendamentos', agendamentoRoutes);
+
+// Gerenciamento de pre triagem
+// app.use('/api/v1/pre-triagens', authMiddleware, preTriagemRoutes);
+// app.use(
+//   '/api/v1/triagem-agendamentos',
+//   authMiddleware,
+//   triagemAgendamentoRoutes
+// );
+// app.use('/api/v1/notificacoes', authMiddleware, notificacaoRoutes);
+
+// Mensagem que serar adicionada a pretriagem
+// app.use('/api/v1/mensagens-triagem', authMiddleware, mensagemTriagemRoutes);
+
+// // Autenticação: cadastro de paciente e login
+// app.use('/api/v1/auth', authRoutes);
+
+// Gerenciamento de usuários:
+// app.use('/api/v1/usuarios', authMiddleware, usuarioRoutes);
+
+// Clínicas:
+// app.use('/api/v1/clinicas', authMiddleware, clinicaRoutes);
+
+// Profissionais:
+// app.use('/api/v1/profissionais', authMiddleware, profissionalRoutes);
+
+
+
+
+
 
 // Rota de teste inicial para a API (seguindo o prefixo v1)
 app.get('/api/v1/health', (req, res) => {
