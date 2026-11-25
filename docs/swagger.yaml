@@ -1,4 +1,8 @@
 openapi: 3.0.3
+
+security:
+  - BearerAuth: []
+
 info:
   title: Saúde na Palma da Mão - API
   version: 1.0.0
@@ -30,6 +34,8 @@ paths:
     get:
       tags: [Saúde]
       summary: Verifica se a API está funcionando
+      security: []
+      
       responses:
         '200':
           description: API funcionando
@@ -49,6 +55,8 @@ paths:
     post:
       tags: [Autenticação]
       summary: Cadastra uma conta de paciente
+      security: []
+
       description: A senha é armazenada como hash e o tipo de usuário é definido como PACIENTE.
       requestBody:
         required: true
@@ -72,6 +80,8 @@ paths:
     post:
       tags: [Autenticação]
       summary: Autentica um usuário e retorna um JWT
+      security: []
+
       requestBody:
         required: true
         content:
