@@ -1,9 +1,9 @@
 crie para mim um contrato de api baseado nesse rest.http:
 
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiNSIsInRpcG9fdXN1YXJpbyI6IlBBQ0lFTlRFIiwiaWF0IjoxNzk1Mjg4ODk4LCJleHAiOjE3OTUyOTI0OTh9.JqF1hJ38DBGQxIbxXIga-IaPcNsdo-IaJFliW62-Iyc
-@baseUrl = http://localhost:3000/api/v1
-# @baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoiMSIsInRpcG9fdXN1YXJpbyI6IkFETUlOSVNUUkFET1IiLCJpYXQiOjE3OTU2MjUzMjcsImV4cCI6MTc5NTY2ODUyN30.9wHyr4iOZA9rPU0XFgzL7rBShZYZG9MlqeZAcWukTDM
+# @baseUrl = http://localhost:3000/api/v1
+@baseUrl = https://backend-saude-na-palma-da-mao-express.onrender.com/api/v1
 
 ### 1. Verificar Saúde da API
 GET {{baseUrl}}/health
@@ -28,7 +28,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {  
-  "email": "admin3@admin3.com",
+  "email": "admin@admin.com",
   "senha": "admin12345"  
 }
 

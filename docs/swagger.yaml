@@ -331,6 +331,8 @@ paths:
     get:
       tags: [Pacientes]
       summary: Lista pacientes
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: Lista de pacientes
